@@ -76,7 +76,7 @@ var people []Person
 
 // Return the full person variable to the frontend. 
 
-func GetPersonEndpoint(w http.ResponseWriter, req *http.Request) {
+func GetPerson(w http.ResponseWriter, req *http.Request) {
     params := mux.Vars(req)
     for _, item := range people {
         if item.ID == params["id"] {
@@ -89,7 +89,7 @@ func GetPersonEndpoint(w http.ResponseWriter, req *http.Request) {
 
 // Return all people in the people slice as json to the frontend. 
 
-func GetPeopleEndpoint(w http.ResponseWriter, req *http.Request) {
+func GetPeople(w http.ResponseWriter, req *http.Request) {
     json.NewEncoder(w).Encode(people)
 }
 
@@ -99,7 +99,7 @@ func GetPeopleEndpoint(w http.ResponseWriter, req *http.Request) {
 // In the end, our global array will be returned and it should include everything including our newly 
 // added piece of data.
 
-func CreatePersonEndpoint(w http.ResponseWriter, req *http.Request) {
+func CreatePerson(w http.ResponseWriter, req *http.Request) {
     params := mux.Vars(req)
     var person Person
     _ = json.NewDecoder(req.Body).Decode(&person)
@@ -113,7 +113,7 @@ func CreatePersonEndpoint(w http.ResponseWriter, req *http.Request) {
 // When the id to be deleted has been found, we can recreate our slice with all 
 // data excluding that found at the index.
 
-func DeletePersonEndpoint(w http.ResponseWriter, req *http.Request) {
+func DeletePerson(w http.ResponseWriter, req *http.Request) {
     params := mux.Vars(req)
     for index, item := range people {
         if item.ID == params["id"] {
@@ -125,7 +125,7 @@ func DeletePersonEndpoint(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-    fmt.Println("Starting Test Restful API on port 12345 = http://localhost:8888")
+    fmt.Println("Starting Test Restful API on port 8888 = http://localhost:8888")
     fmt.Println("to see ALL PEOPLE: Try with: localhost:8888/people")
     fmt.Println("To see single person (ID 2): Try with: localhost:8888/people/2")
 
@@ -136,10 +136,10 @@ func main() {
     people = append(people, Person{ID: "2", Firstname: "Roger", Lastname: "Rabbit"})
     people = append(people, Person{ID: "4", Firstname: "Mickey", Lastname: "Mouse", Address: &Address{City: "Orlando", State: "FL"}})
 
-    router.HandleFunc("/people", GetPeopleEndpoint).Methods("GET")
-    router.HandleFunc("/people/{id}", GetPersonEndpoint).Methods("GET")
-    router.HandleFunc("/people/{id}", CreatePersonEndpoint).Methods("POST")
-    router.HandleFunc("/people/{id}", DeletePersonEndpoint).Methods("DELETE")
+    router.HandleFunc("/people",      GetPeople).Methods("GET")
+    router.HandleFunc("/people/{id}", GetPerson).Methods("GET")
+    router.HandleFunc("/people/{id}", CreatePerson).Methods("POST")
+    router.HandleFunc("/people/{id}", DeletePerson).Methods("DELETE")
 
     log.Fatal(http.ListenAndServe(":8888", router))
 }
