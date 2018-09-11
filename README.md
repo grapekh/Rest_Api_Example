@@ -10,3 +10,8 @@ Simple rest api example written in GO Lang - No database required for testing
  Dependencies: Gorilla/MUX
   go get github.com/gorilla/mux
 
+I tested this using postman. 
+
+Building is simple - go build main.go
+Run on port 8888 from webpage - easy to use postman chrome plugin to test Display, Delete and Create
+
