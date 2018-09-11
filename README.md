@@ -1,5 +1,5 @@
 # Rest_Api_Example
-Simple rest api example written in GO Lang - No database required for testing
+Simple REST API example written in GO Lang - No database required for testing
 
  This has several kinds of API Actions: 
  * [     list all people (GET /people), ]
